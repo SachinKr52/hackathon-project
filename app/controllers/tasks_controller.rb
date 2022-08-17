@@ -34,11 +34,16 @@ class TasksController < ApplicationController
 
   # PUT projects/1/tasks/1
   def update
-    if @task.update(task_params)
-      redirect_to(@task.project)
+    var= User.where(email: task_params[:assignee])
+    if var.length()!=0
+      if @task.update(task_params)
+        redirect_to(@task.project)
+      else
+        render action: 'edit'
+      end
     else
-      render action: 'edit'
-    end
+      redirect_to(@task.project, notice: 'Email ID doesnot exist' )
+    end  
   end
 
   # DELETE projects/1/tasks/1
