@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_180220) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_16_184749) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_180220) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "owner"
+    t.string "assignee"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
