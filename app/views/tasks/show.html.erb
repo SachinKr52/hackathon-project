@@ -42,6 +42,7 @@
   <p class="lead"><%= @task.description %></p>
   <hr class="my-4">
   <p>AssignedTo: <%= @task.assignee %></p>
+  <p>Story Point: <%= @task.story_point %></p>
   <p class="lead">
   <%= link_to 'Edit', edit_project_task_path(@task.project, @task),class: "btn btn-primary btn-lg" %>
   </p>
