@@ -34,11 +34,16 @@ class TasksController < ApplicationController
 
   # PUT projects/1/tasks/1
   def update
-    if @task.update(task_params)
-      redirect_to(@task.project)
+    var= User.where(email: task_params[:assignee])
+    if var.length()!=0
+      if @task.update(task_params)
+        redirect_to(@task.project)
+      else
+        render action: 'edit'
+      end
     else
-      render action: 'edit'
-    end
+      redirect_to(@task.project, notice: 'Email ID doesnot exist' )
+    end  
   end
 
   # DELETE projects/1/tasks/1
@@ -51,7 +56,7 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = current_user.projects.find(params[:project_id])
+      @project = Project.find(params[:project_id])
     end
 
     def set_task
@@ -60,6 +65,6 @@ class TasksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:name, :description, :assignee, :status, :project_id)
+      params.require(:task).permit(:name, :description, :assignee, :story_point, :status, :project_id)
     end
 end

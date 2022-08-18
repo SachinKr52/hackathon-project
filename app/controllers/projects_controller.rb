@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects
+    @projects = Project.all
   end
 
   # GET /projects/1
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = current_user.projects.build
+    @project = Project.new
   end
 
   # GET /projects/1/edit
@@ -26,31 +26,41 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = current_user.projects.build(project_params)
-
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @project }
-      else
-        format.html { render :new }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+    @project = Project.new(project_params)
+    @project.user_id = current_user.id
+    var= User.where(email: project_params[:owner])
+    if var.length()!=0
+      respond_to do |format|
+        if @project.save
+          format.html { redirect_to @project, notice: 'Project was successfully created.' }
+          format.json { render :show, status: :created, location: @project }
+        else
+          format.html { render :new }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
       end
-    end
+    else
+      redirect_to @project, notice: 'Email ID doesnot exist'
+    end    
   end
 
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @project }
-      else
-        format.html { render :edit }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+    var= User.where(email: project_params[:owner])
+    if var.length()!=0
+      respond_to do |format|
+        if @project.update(project_params)
+          format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+          format.json { render :show, status: :ok, location: @project }
+        else
+          format.html { render :edit }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
       end
-    end
+    else 
+      redirect_to @project, notice: 'Email ID doesnot exist'
+    end  
   end
 
   # DELETE /projects/1
@@ -66,7 +76,7 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = current_user.projects.find(params[:id])
+      @project = Project.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
