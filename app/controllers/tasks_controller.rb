@@ -42,7 +42,7 @@ class TasksController < ApplicationController
         render action: 'edit'
       end
     else
-      redirect_to(@task.project, notice: 'Email ID doesnot exist' )
+      redirect_to(edit_project_task_path, notice: 'Email ID doesnot exist' )
     end  
   end
 

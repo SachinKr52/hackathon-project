@@ -1,6 +1,7 @@
-<p id="notice"><%= notice %></p>
 
-<p>
+<%
+=begin%>
+ <p>
   <b>Name:</b>
   <%= @task.name %>
 </p>
@@ -26,5 +27,17 @@
 </p>
 
 
-<%= link_to 'Edit', edit_project_task_path(@task.project, @task) %> |
-<%= link_to 'Back', project_tasks_path(@task.project) %>
+<%= link_to 'Edit', edit_project_task_path(@task.project, @task) %> | 
+<%
+=end%>
+
+<div class="jumbotron">
+<span class="badge badge-<%= @task.badge_color %> mb-3"><%= @task.status %></span>
+  <h1 class="display-4"><%= @task.name %></h1>
+  <p class="lead"><%= @task.description %></p>
+  <hr class="my-4">
+  <p>AssignedTo: <%= @task.assignee %></p>
+  <p class="lead">
+  <%= link_to 'Edit', edit_project_task_path(@task.project, @task),class: "btn btn-primary btn-lg" %>
+  </p>
+</div>
