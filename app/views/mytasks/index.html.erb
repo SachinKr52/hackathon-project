@@ -1,0 +1,67 @@
+<%
+=begin%>
+ <h1>Listing tasks</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Project</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.name %></td>
+    <td><%= task.description %></td>
+    <td><%= task.status %></td>
+    <td><%= task.project_id %></td>
+    <td><%= link_to 'Show', [task.project, task] %></td>
+    <td><%= link_to 'Edit', edit_project_task_path(task.project, task) %></td>
+    <td><%= link_to 'Destroy', [task.project, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table> 
+<%
+=end%>
+
+<style type="text/css">
+.project-card:hover{
+   background-color: #f7f7f7;
+}
+.element:hover{
+  text-decoration:none;
+}
+.button{
+  background:cadetblue
+}
+</style>
+    <% if @tasks.length()==0 %>
+    <h2 style="text-align:center">Not have assigned task yet</h2>
+    <% end %>
+    <% @tasks.order(created_at: :desc).each do |task| %>
+      <% if task.persisted? %>
+        <div>
+          <div class="card project-card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <span class="badge badge-<%= task.badge_color %> mb-3"><%= task.status %></span>
+                <div style="display:flex">
+                  <%= link_to 'Display Ticket', [task.project, task], class: 'btn btn-dark btn-sm button' %>
+                  <%= link_to 'Edit', edit_project_task_path(task.project, task), class: 'btn btn-light btn-sm' %>
+                  <%= button_to "Destroy", [task.project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm' %>
+                </div>
+              </div>
+              <h5 class='card-title mb-2'>
+                <span><%= task.name %></span>
+              </h5>
+              <p>AssignedTo: <%= task.assignee %></p>
+            </div>
+          </div>
+          </div>
+        <% end%>
+    <% end%>
+

@@ -1,8 +1,9 @@
-<%= link_to 'Back', @project, class: 'btn btn-secondary mb-3' %>
+
 <div class="card">
   <div class="card-body">
-    <h2 class='card-title mb-4'>
-      <span>Editing project</span>
+    <h2 class='card-title d-flex mb-4'>
+      <%= link_to 'Back', @project, class: 'btn btn-secondary mb-3' %>
+      <span style="margin-left:20px">Editing project</span>
     </h2>
 
     <%= render 'form', project: @project %>

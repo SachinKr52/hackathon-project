@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.all.order(created_at: :desc)
   end
 
   # GET /projects/1
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
         end
       end
     else
-      redirect_to @project, notice: 'Email ID doesnot exist'
+      redirect_to(new_project_path, notice: 'Email ID doesnot exist')
     end    
   end
 
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
         end
       end
     else 
-      redirect_to @project, notice: 'Email ID doesnot exist'
+      redirect_to(edit_project_path, notice: 'Email ID doesnot exist')
     end  
   end
 

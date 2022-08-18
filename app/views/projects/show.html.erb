@@ -1,7 +1,18 @@
-<%= link_to 'Back', projects_path, class: 'btn btn-secondary mb-3' %>
+<style type="text/css">
+.project-card:hover{
+   background-color: #f7f7f7;
+}
+.element:hover{
+  text-decoration:none;
+}
+.button{
+  background:cadetblue
+}
+</style>
 <div class="card">
   <div class="card-body">
     <h2 class='card-title d-flex justify-content-between mb-4'>
+    <%= link_to 'Back', projects_path, class: 'btn btn-secondary mb-3' %>
       <span><%= @project.name %></span>
       <div style="display:flex">
         <%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-light' %>
@@ -35,26 +46,28 @@
     </div>
 
     <h4>Tasks</h4>
-    <% @project.tasks.each do |task| %>
+    <% @project.tasks.order(created_at: :desc).each do |task| %>
       <% if task.persisted? %>
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <span class="badge badge-<%= task.badge_color %> mb-3"><%= task.status %></span>
-              <div style="display:flex">
-                <%= link_to 'Edit', edit_project_task_path(task.project, task), class: 'btn btn-light btn-sm' %>
-                <%= button_to "Destroy", [task.project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm' %>
+        <div>
+          <div class="card project-card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <span class="badge badge-<%= task.badge_color %> mb-3"><%= task.status %></span>
+                <div style="display:flex">
+                  <%= link_to 'Display Ticket', [task.project, task], class: 'btn btn-dark btn-sm button'%>
+                  <%= link_to 'Edit', edit_project_task_path(task.project, task), class: 'btn btn-light btn-sm' %>
+                  <%= button_to "Destroy", [task.project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm' %>
+                </div>
               </div>
-            </div>
-            <h5 class='card-title mb-2'>
-              <span><%= task.name %></span>
-            </h5>
-            <p>Description: <%= task.description %></p>
-             <p>AssignedTo: <%= task.assignee %></p>
+              <h5 class='card-title mb-2'>
+                <span><%= task.name %></span>
+              </h5>
+              <p>AssignedTo: <%= task.assignee %></p>
               <p>Story Points: <%= task.story_point %></p>
+            </div>
           </div>
         </div>
-      <% end %>
+        <% end%>
     <% end%>
 
   </div>
