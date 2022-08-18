@@ -1,16 +1,19 @@
 class Task < ApplicationRecord
   belongs_to :project
 
-  validates :status, inclusion: { in: ['not-started', 'in-progress', 'complete'] }
+  validates :status, inclusion: { in: ['not-started', 'not-assigned', 'in-progress', 'complete'] }
 
   STATUS_OPTIONS = [
-    ['Not started', 'not-started'],
-    ['In progress', 'in-progress'],
+    ['Not Started', 'not-started'],
+    ['Not Assigned', 'not-assigned'],
+    ['In Progress', 'in-progress'],
     ['Complete', 'complete']
   ]
 
   def badge_color
     case status
+    when 'not-assigned'
+      'secondary'
     when 'not-started'
       'secondary'
     when 'in-progress'
@@ -30,5 +33,9 @@ class Task < ApplicationRecord
 
   def not_started?
     status == 'not-started'
+  end
+
+  def not_assigned?
+    status == 'not-assigned'
   end
 end

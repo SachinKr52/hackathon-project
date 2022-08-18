@@ -16,12 +16,12 @@
     <%= f.text_field :name, class: 'form-control',:required => true %>
   </div>
   <div class="form-group">
-    <%= f.label :description %><br />
-    <%= f.text_area :description, class: 'form-control',:required => true %>
-  </div>
-  <div class="form-group">
     <%= f.label :assignee %><br />
     <%= f.text_field :assignee, class: 'form-control',:required => true %>
+  </div>
+   <div class="form-group">
+    <%= f.label :story_point %><br />
+    <%= f.text_field :story_point, class: 'form-control' %>
   </div>
   <div class="form-group">
     <%= f.label :status %><br />
