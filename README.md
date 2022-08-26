@@ -12,3 +12,7 @@ Rails 7.0.3.1
 
 ➜  ~ sqlite3 --version
 3.37.0
+
+
+
+# Winners :tada: :1st_place_medal:
